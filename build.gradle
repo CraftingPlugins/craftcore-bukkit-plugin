@@ -4,70 +4,55 @@ buildscript {
     }
 }
 plugins {
-    id 'java-library'
-    id 'io.spring.dependency-management' version '1.1.0'
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
-    id 'xyz.jpenilla.run-paper' version '1.0.6'
+    id "java-library"
+    id "io.spring.dependency-management" version "1.1.0"
+    id "com.github.johnrengelman.shadow" version "7.1.2"
 }
 
-group = 'dev.craftplugins'
-version = '1.0.0'
+group = "dev.craftplugins"
+version = "1.0.0"
 
 repositories {
     mavenLocal()
     mavenCentral()
     maven {
-        name 'Jitpack'
-        url 'https://jitpack.io'
+        name "Jitpack"
+        url "https://jitpack.io"
     }
     maven {
-        name 'Imanity'
-        url 'https://repo.imanity.dev/imanity-libraries'
+        name "Imanity"
+        url "https://repo.imanity.dev/imanity-libraries"
     }
     maven {
-        name 'PaperMC'
-        url 'https://repo.papermc.io/repository/maven-public'
-    }
-    maven {
-        name = "CodeMC"
-        url = uri("https://repo.codemc.io/repository/maven-public/")
+        name "PaperMC"
+        url "https://repo.papermc.io/repository/maven-public"
     }
 }
 
 dependencies {
-    api "io.github.classgraph:classgraph:4.8.143"
-    api "io.github.toolfactory:narcissus:1.0.7"
-    api "javax.annotation:javax.annotation-api:1.3.2"
-    api("io.fairyproject:bukkit-bundles:0.6.6b3-SNAPSHOT")
+    api("io.github.classgraph:classgraph:4.8.143")
+    api("io.github.toolfactory:narcissus:1.0.7")
+    api("javax.annotation:javax.annotation-api:1.3.2")
+    api("io.fairyproject:bukkit-bundles:" + getProperty("fairy.version"))
 
-    api libs.javax.persistence.api
-    api libs.gson
-    api libs.yaml
+    api("org.yaml:snakeyaml:2.0")
+    api("com.google.code.gson:gson:2.8.9")
+    api("javax.persistence:javax.persistence-api:2.2")
 }
 
 dependencies {
     // Spigot
-    compileOnly "org.spigotmc:spigot-api:1.19.4-R0.1-SNAPSHOT"
+    compileOnly("org.spigotmc:spigot-api:1.19.4-R0.1-SNAPSHOT")
 
     // Jabel
-    annotationProcessor 'com.github.bsideup.jabel:jabel-javac-plugin:0.4.2'
-    compileOnly 'com.github.bsideup.jabel:jabel-javac-plugin:0.4.2'
-
-    // Lombok
-    compileOnly(libs.lombok)
-    annotationProcessor(libs.lombok)
-    testCompileOnly(libs.lombok)
-    testAnnotationProcessor(libs.lombok)
-
-    // Testing
-    implementation("org.apache.commons:commons-compress:1.22")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.0")
+    annotationProcessor("com.github.bsideup.jabel:jabel-javac-plugin:0.4.2")
+    compileOnly("com.github.bsideup.jabel:jabel-javac-plugin:0.4.2")
 }
 
 configure([tasks.compileJava]) {
     sourceCompatibility = 16 // for the IDE support
     options.release = 8
-    options.encoding = 'UTF-8'
+    options.encoding = "UTF-8"
 
     javaCompiler = javaToolchains.compilerFor {
         languageVersion = JavaLanguageVersion.of(16)
@@ -82,30 +67,18 @@ java {
 
 shadowJar {
     relocate("io.fairyproject", "" + findProperty("plugin.package") + ".fairy")
-    relocate("net.kyori", "dev.craftcore.fairy.libs.kyori")
-    //relocate("com.github.retrooper.packetevents", "" + findProperty("plugin.package") + ".fairy.libs.packetevents")
-    relocate("dev.imanity.brew", "" + findProperty("plugin.package") + ".brew")
+    relocate("net.kyori", "" + findProperty("plugin.package") + ".fairy.libs.kyori")
+    relocate("com.github.retrooper.packetevents", "" + findProperty("plugin.package") + ".fairy.libs.packetevents")
     relocate("org.yaml.snakeyaml", "" + findProperty("plugin.package") + ".snakeyaml")
     relocate("com.cryptomorin.xseries", "" + findProperty("plugin.package") + ".xseries")
     relocate("org.spongepowered.configurate", "" + findProperty("plugin.package") + ".libs.configurate")
     relocate("io.leangen.geantyref", "" + findProperty("plugin.package") + ".libs.geantyref")
-    relocate("xyz.xenondevs.particle", "" + findProperty("plugin.package") + ".libs.particle")
 
-    dependencies {
-        exclude(dependency("com.google.*:.*:.*"))
-        //exclude(dependency("net.kyori:.*:.*"))
-        exclude(dependency("io.fairyproject.*:.*:.*"))
-    }
-
-    archiveFileName.set("CraftCore.jar");
+    archiveFileName.set("CraftCore.jar")
 }
 
 build {
     dependsOn(shadowJar)
-}
-
-runServer {
-    minecraftVersion("1.19.4")
 }
 
 test {
@@ -115,8 +88,8 @@ test {
 processResources {
     def props = [version: version]
     inputs.properties props
-    filteringCharset 'UTF-8'
-    filesMatching('plugin.yml') {
+    filteringCharset "UTF-8"
+    filesMatching("plugin.yml") {
         expand props
     }
 }
