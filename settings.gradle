@@ -1,1 +1,12 @@
+pluginManagement {
+    repositories {
+        mavenLocal()
+        gradlePluginPortal()
+        mavenCentral()
+        maven {
+            url "https://repo.imanity.dev/imanity-libraries"
+        }
+    }
+}
+
 rootProject.name = "craftcore"

@@ -1,4 +1,0 @@
-name: CraftCore
-version: '${version}'
-main: dev.craftplugins.craftcore.CraftCore
-api-version: 1.13
