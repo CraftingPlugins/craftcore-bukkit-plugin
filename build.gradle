@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "dev.craftplugins"
-version = "1.0.7"
+version = "1.1.0"
 
 repositories {
     mavenLocal()
@@ -55,6 +55,7 @@ dependencies {
     api("io.fairyproject:bukkit-timer")
     api("io.fairyproject:bukkit-nbt")
     api("io.fairyproject:module.tablist")
+    compileOnlyApi(libs.bundles.configurate)
 }
 
 fairy {
@@ -88,6 +89,7 @@ shadowJar {
     relocate("com.cryptomorin.xseries", "" + findProperty("plugin.package") + ".xseries")
     relocate("org.spongepowered.configurate", "" + findProperty("plugin.package") + ".libs.configurate")
     relocate("io.leangen.geantyref", "" + findProperty("plugin.package") + ".libs.geantyref")
+    relocate("org.spongepowered.configurate", "" + findProperty("plugin.package") + ".libs.configurate")
 
     archiveFileName.set("CraftCore.jar")
 }
