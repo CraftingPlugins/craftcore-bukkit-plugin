@@ -7,12 +7,11 @@ plugins {
     id "java-library"
     id "io.spring.dependency-management" version "1.1.0"
     id "com.github.johnrengelman.shadow" version "7.1.2"
-    id 'xyz.jpenilla.run-paper' version '1.0.6'
-    id "io.fairyproject" version "0.6.8b2-SNAPSHOT"
+    id "io.fairyproject" version "0.7.0b2-SNAPSHOT"
 }
 
 group = "dev.craftplugins"
-version = "1.1.1"
+version = "1.2.0"
 
 repositories {
     mavenLocal()
@@ -59,8 +58,8 @@ dependencies {
 }
 
 fairy {
-    mainPackage.set(findProperty("plugin.package").toString())
     name.set("CraftCore")
+    mainPackage.set(findProperty("plugin.package").toString())
 
     bukkitProperties().bukkitApi = "1.13"
 }
@@ -103,9 +102,7 @@ test {
 }
 
 runServer {
-    minecraftVersion("1.19.4")
-    legacyPluginLoading()
-    args("--nogui")
+    version = "1.19.4"
 }
 
 processResources {
