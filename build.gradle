@@ -7,7 +7,7 @@ plugins {
     id "java-library"
     id "io.spring.dependency-management" version "1.1.0"
     id "com.github.johnrengelman.shadow" version "7.1.2"
-    id "io.fairyproject" version "0.7.0b2-SNAPSHOT"
+    id "io.fairyproject" version "0.7.0b3-SNAPSHOT"
 }
 
 group = "dev.craftplugins"
@@ -53,13 +53,16 @@ dependencies {
     api("io.fairyproject:bukkit-visual")
     api("io.fairyproject:bukkit-timer")
     api("io.fairyproject:bukkit-nbt")
+    api("io.fairyproject:module.map")
     api("io.fairyproject:module.tablist")
     api(libs.bundles.configurate)
 }
 
 fairy {
     name.set("CraftCore")
+
     mainPackage.set(findProperty("plugin.package").toString())
+    fairyPackage.set(findProperty("plugin.package").toString())
 
     bukkitProperties().bukkitApi = "1.13"
 }
